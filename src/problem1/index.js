@@ -7,7 +7,7 @@
 // **Output**: `return` - summation to `n`, i.e. `sum_to_n(5) === 1 + 2 + 3 + 4 + 5 === 15`.
 
 // Negative n sums -1 down to n; zero returns 0.
-// Recursion uses one stack frame per term, while the formula runs in constant time.
+// Recursion halves n each time, so its call stack grows logarithmically.
 
 // Approach 1: Loop
 var sum_to_n_a = function (n) {
@@ -32,11 +32,15 @@ var sum_to_n_b = function (n) {
   return 0;
  }
 
- if (n > 0) {
-  return n + sum_to_n_b(n - 1);
+ if (n < 0) {
+  return -sum_to_n_b(-n);
  }
 
- return n + sum_to_n_b(n + 1);
+ const half = Math.floor(n / 2);
+ const halfSum = sum_to_n_b(half);
+ // S(2k) = 2*S(k) + k²; for odd n, add the last term.
+ const evenSum = 2 * halfSum + half * half;
+ return n % 2 === 0 ? evenSum : evenSum + n;
 };
 
 // Approach 3: Formula

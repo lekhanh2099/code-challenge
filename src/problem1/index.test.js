@@ -11,10 +11,16 @@ describe.each([
   [1, 1],
   [5, 15],
   [1000, 500500],
+  [20000, 200010000],
   [-1, -1],
   [-5, -15],
   [-1000, -500500],
+  [-20000, -200010000],
  ])("for n = %i returns %i", (n, expected) => {
   expect(sumToN(n)).toBe(expected);
  });
+});
+
+it("sums a large safe input without overflowing the recursive call stack", () => {
+ expect(sum_to_n_b(134217727)).toBe(9007199187632128);
 });
